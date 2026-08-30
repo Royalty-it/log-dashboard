@@ -17,7 +17,7 @@ Quick Start
 
 ``bash
 
-git clone https://github.com/your-username/log-dashboard.git
+git clone https://github.com/Royalty-it/log-dashboard.git
 
 cd log-dashboard
 
