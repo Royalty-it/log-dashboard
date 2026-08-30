@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Log Dashboard</title>
+    <style>
+        body { background: #0a0a0a; color: #00ffcc; font-family: 'Courier New', monospace; padding: 30px; }
+        .container { max-width: 1200px; margin: auto; }
+        h1 { text-align: center; text-shadow: 0 0 20px #00ffcc66; letter-spacing: 4px; }
+        .stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+        .stat-box { background: rgba(0,255,200,0.05); border: 1px solid #00ffcc44; border-radius: 10px; padding: 20px 30px; text-align: center; min-width: 120px; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; color: #00ffcc; text-shadow: 0 0 20px #00ffcc88; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; color: #88ddcc; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #00ffcc22; padding: 8px; text-align: left; }
+        th { color: #00ffcc; border-bottom: 2px solid #00ffcc44; }
+        .chart-container { background: rgba(0,0,0,0.4); border-radius: 10px; padding: 10px; margin: 10px 0; border: 1px solid #00ffcc22; }
+        .row { display: flex; flex-wrap: wrap; gap: 20px; }
+        .col { flex: 1; min-width: 300px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⌨️ LOG DASHBOARD</h1>
+
+    <div class="stats">
+        <div class="stat-box"><div class="stat-label">Total Events</div><div class="stat-number">{{ total_events }}</div></div>
+        <div class="stat-box"><div class="stat-label">Failed Logins</div><div class="stat-number" style="color:#ff4466;">{{ failed_logins }}</div></div>
+        <div class="stat-box"><div class="stat-label">Successful</div><div class="stat-number" style="color:#44ff88;">{{ successful_logins }}</div></div>
+        <div class="stat-box"><div class="stat-label">Unique IPs</div><div class="stat-number">{{ unique_ips }}</div></div>
+    </div>
+
+    <div class="row">
+        <div class="col chart-container">{{ pie_html|safe }}</div>
+        <div class="col chart-container">{{ bar_html|safe }}</div>
+    </div>
+    <div class="chart-container">{{ line_html|safe }}</div>
+
+    <h3>Recent Events</h3>
+    <table>
+        <tr><th>Timestamp</th><th>Event</th><th>IP</th><th>User</th></tr>
+        {% for row in table_data %}
+        <tr>
+            <td>{{ row.timestamp }}</td>
+            <td>{{ row.event }}</td>
+            <td>{{ row.ip or '-' }}</td>
+            <td>{{ row.user or '-' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
